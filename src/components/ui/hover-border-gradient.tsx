@@ -24,6 +24,8 @@ export function HoverBorderGradient({
 >) {
   const [hovered, setHovered] = useState<boolean>(false);
   const [direction, setDirection] = useState<Direction>("TOP");
+  const [rotation, setRotation] = useState<number>(0);
+  const [transitionDuration, setTransitionDuration] = useState<number>(duration);
 
   const rotateDirection = (currentDirection: Direction): Direction => {
     const directions: Direction[] = ["TOP", "LEFT", "BOTTOM", "RIGHT"];
@@ -54,6 +56,11 @@ export function HoverBorderGradient({
       return () => clearInterval(interval);
     }
   }, [hovered]);
+
+  useEffect(() => {
+    setRotation(rotateDirection === 'clockwise' ? 360 : -360);
+    setTransitionDuration(duration);
+  }, [duration, rotateDirection]);
 
   return (
     <Tag

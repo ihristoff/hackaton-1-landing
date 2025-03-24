@@ -5,13 +5,13 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 
 export const MacbookScroll = ({
-  src,
-  showGradient,
   title,
+  src,
+  showGradient = true,
 }: {
+  title?: string;
   src?: string;
   showGradient?: boolean;
-  title?: string | React.ReactNode;
 }) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({

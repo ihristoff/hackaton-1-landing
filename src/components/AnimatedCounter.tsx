@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion, useSpring, useTransform, MotionValue } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface AnimatedCounterProps {
   value: string;
@@ -9,30 +9,18 @@ interface AnimatedCounterProps {
 }
 
 const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ value, duration = 2 }) => {
-  // Remove any non-numeric characters except decimal points
-  const numericValue = parseFloat(value.replace(/[^\d.]/g, ''));
+  // Remove any + or other symbols for the animation
+  const numericValue = parseInt(value.replace(/[^0-9]/g, ''));
   
-  // Create a motion value that starts at 0 and animates to the target value
-  const count = useSpring(0, {
-    duration: duration * 1000,
-    stiffness: 50,
-    damping: 20,
-    restDelta: 0.001,
-  });
-
-  // When the component mounts, animate to the target value
-  React.useEffect(() => {
-    count.set(numericValue);
-  }, [count, numericValue]);
-
-  // Transform the animated value to include any suffix (like '+' or '%')
-  const rounded = useTransform(count, (latest) => {
-    const roundedValue = Math.round(latest * 100) / 100;
-    const suffix = value.match(/[^0-9.].*/)?.[0] || '';
-    return `${roundedValue}${suffix}`;
-  });
-
-  return <motion.span>{rounded}</motion.span>;
+  return (
+    <motion.span
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      {value}
+    </motion.span>
+  );
 };
 
 export default AnimatedCounter; 

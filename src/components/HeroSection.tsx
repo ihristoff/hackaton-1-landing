@@ -40,7 +40,7 @@ const HeroSection = () => {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [isHovered]);
+  }, [isHovered, chartImages.length]);
 
   return (
     <section className="relative min-h-screen flex flex-col items-center overflow-hidden bg-gray-900 text-white">
